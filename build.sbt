@@ -15,7 +15,10 @@ val webJars = Seq (
     "org.webjars" %% "webjars-play" % "2.5.0",
     "org.webjars" % "bootstrap-sass" % "3.3.1-1",
     "org.webjars" % "jquery" % "2.2.2",
-    "org.webjars.bower" % "font-awesome-sass" % "4.6.2"
+    "org.webjars.bower" % "font-awesome-sass" % "4.6.2",
+    "org.webjars.npm" % "react" % "15.3.2",
+    "org.webjars.npm" % "react-dom" % "15.3.2",
+    "org.webjars.npm" % "requirejs" % "2.3.2"
 )
 
 val otherDependencies = Seq(
@@ -35,6 +38,7 @@ lazy val `inventorymanagement` = (project in file(".")).enablePlugins(PlayScala,
     maintainer in Linux := "Logan Thompson <cobbleopolis@gmail.com>",
     packageSummary in Linux := "Inventory Management server",
     packageDescription := "A play server to run a Inventory Management instance",
-    (testOptions in Test) += Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/report")
+    (testOptions in Test) += Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/report"),
+    JsEngineKeys.engineType := JsEngineKeys.EngineType.Node
     //    bashScriptExtraDefines += """addJava "-Dconfig.file=${app_home}/../conf/production.conf""""
 )
