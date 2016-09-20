@@ -1,0 +1,22 @@
+@import "variables"
+@import "lib/bootstrap-sass/stylesheets/bootstrap"
+@import "lib/font-awesome-sass/assets/stylesheets/font-awesome"
+@import "overrides"
+
+body
+    margin-top: $navbar-height
+
+#nav-logo
+    height: 100%
+    display: inline
+    padding-right: 15px
+
+.row
+    &.top-gutter
+        margin-top: $grid-gutter-width
+
+.logo
+    height: 3em
+
+#sign-in-button, #sign-up-button
+    margin-right: $navbar-padding-horizontal
