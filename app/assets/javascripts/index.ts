@@ -11,7 +11,6 @@ $(function () {
         $(hash).modal('toggle');
     }
     $("#isbnSubmit").on("click", () => {
-        console.log("Click");
         $.ajax({
             type: 'GET',
             url: `/isbnLookup/${$('#isbnInput').val()}`,
