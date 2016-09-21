@@ -1,0 +1,10 @@
+@(book: Book)
+
+<div class="panel panel-default">
+    <div class="panel-heading">@book.name</div>
+    <div class="panel-body">
+    @for(author <- book.authors) {
+        <p>@author</p>
+    }
+    </div>
+</div>

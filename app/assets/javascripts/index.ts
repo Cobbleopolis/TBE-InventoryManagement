@@ -1,7 +1,7 @@
 import {Book} from "./models/book";
 
 let book: Book;
-let info: JQuery;
+export let info: JQuery;
 
 $(function () {
     info = $("#info");
@@ -11,14 +11,17 @@ $(function () {
         $(hash).modal('toggle');
     }
     $("#isbnSubmit").on("click", () => {
+        console.log("Click");
         $.ajax({
             type: 'GET',
-            url: `isbnLookup/${$('isbnInput').val()}`,
+            url: `/isbnLookup/${$('#isbnInput').val()}`,
+            crossDomain: true,
+            dataType: 'html',
             error(error: JQueryXHR, status: string, errorThrown: string) {
                 info.html("<p>No books found.</p>")
             },
             success(data: any) {
-                info.html(data)
+                $("#info").html(data);
             }
         })
     });
