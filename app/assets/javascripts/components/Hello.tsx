@@ -6,10 +6,12 @@ export interface HelloState { someInput: string; }
 
 export class Hello extends React.Component<HelloProps, HelloState> {
 
-    state: HelloState = {someInput: 'TypeScript'};
+    state: HelloState;
 
-    constructor(props: any) {
+    constructor(props: HelloProps) {
         super(props);
+
+        this.state = {someInput: props.compiler};
 
         this.handleChange = this.handleChange.bind(this)
     }
