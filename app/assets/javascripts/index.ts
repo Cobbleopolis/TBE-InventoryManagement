@@ -17,7 +17,8 @@ $(function () {
             crossDomain: true,
             dataType: 'html',
             error(error: JQueryXHR, status: string, errorThrown: string) {
-                info.html("<p>No books found.</p>")
+                console.error(status + " | " + errorThrown, error);
+                info.html("<p>No books found.</p>");
             },
             success(data: any) {
                 $("#info").html(data);
