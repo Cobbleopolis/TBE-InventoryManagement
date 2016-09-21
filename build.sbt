@@ -16,8 +16,6 @@ val webJars = Seq (
     "org.webjars" % "bootstrap-sass" % "3.3.1-1",
     "org.webjars" % "jquery" % "2.2.2",
     "org.webjars.bower" % "font-awesome-sass" % "4.6.2",
-    "org.webjars.npm" % "react" % "15.3.2",
-    "org.webjars.npm" % "react-dom" % "15.3.2",
     "org.webjars.npm" % "requirejs" % "2.3.2"
 )
 
