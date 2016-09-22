@@ -9,7 +9,7 @@ import play.api.mvc._
 import util.ISBNUtil
 
 
-class Application @Inject()(implicit ws: WSClient, environment: play.api.Environment) extends Controller {
+class Application @Inject()(implicit ws: WSClient, environment: play.api.Environment, config: play.api.Configuration) extends Controller {
 
     implicit val mode: Mode.Mode = environment.mode
 

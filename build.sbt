@@ -21,7 +21,8 @@ val webJars = Seq (
 
 val otherDependencies = Seq(
     "com.adrianhurt" %% "play-bootstrap" % "1.0-P25-B3" exclude("org.webjars", "jquery"),
-    "org.mindrot" % "jbcrypt" % "0.3m"
+    "org.mindrot" % "jbcrypt" % "0.3m",
+    "com.google.apis" % "google-api-services-books" % "v1-rev87-1.22.0"
 )
 
 lazy val `inventorymanagement` = (project in file(".")).enablePlugins(PlayScala, DebianPlugin, BuildInfoPlugin).settings(
@@ -37,6 +38,7 @@ lazy val `inventorymanagement` = (project in file(".")).enablePlugins(PlayScala,
     packageSummary in Linux := "Inventory Management server",
     packageDescription := "A play server to run a Inventory Management instance",
     (testOptions in Test) += Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/report"),
-    JsEngineKeys.engineType := JsEngineKeys.EngineType.Node
+    JsEngineKeys.engineType := JsEngineKeys.EngineType.Node,
+    PlayKeys.devSettings := Seq("config.file" -> "conf/dev.conf")
     //    bashScriptExtraDefines += """addJava "-Dconfig.file=${app_home}/../conf/production.conf""""
 )
