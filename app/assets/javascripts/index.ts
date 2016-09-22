@@ -14,7 +14,6 @@ $(() => {
         $.ajax({
             type: 'GET',
             url: `/isbnLookup/${$('#isbnInput').val()}`,
-            crossDomain: true,
             dataType: 'html',
             error(error: JQueryXHR, status: string, errorThrown: string) {
                 console.error(status + " | " + errorThrown, error);

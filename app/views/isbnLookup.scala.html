@@ -1,5 +1,9 @@
 @(books: Seq[Book])
 
-@for(b <- books) {
-    @components.book(b)
+@if(books.nonEmpty) {
+    @for(b <- books) {
+        @components.book(b)
+    }
+} else {
+    <p>No books found with that ISBN.</p>
 }

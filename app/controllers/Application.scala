@@ -19,10 +19,7 @@ class Application @Inject()(implicit ws: WSClient, environment: play.api.Environ
 
     def lookupISBN(isbn: String) = Action.async {
         ISBNUtil.googleBooksLookup(isbn).map(books => {
-            if (books.nonEmpty)
-                Ok(views.html.isbnLookup(books))
-            else
-                NotFound("No books were found with that ISBN")
+            Ok(views.html.isbnLookup(books))
         })
     }
 

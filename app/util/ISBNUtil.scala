@@ -17,11 +17,10 @@ object ISBNUtil {
         ) (Book.apply _)
 
     def googleBooksLookup(isbn: String)(implicit ws: WSClient): Future[Seq[Book]] = {
-        val gapiRequest = ws.url("https://www.googleapis.com/books/v1/volumes")
+        ws.url("https://www.googleapis.com/books/v1/volumes")
             .withHeaders("Accept" -> "application/json")
             .withRequestTimeout(10000.millis)
-
-        gapiRequest.withQueryString("q" -> ("isbn:" + isbn)).get().map(response =>
+            .withQueryString("q" -> ("isbn:" + isbn)).get().map(response =>
             (response.json \\ "volumeInfo").map(jsVal => jsVal.as[Book](googleBooksReads))
         )
     }
