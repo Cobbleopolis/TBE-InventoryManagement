@@ -11,16 +11,19 @@ import scala.concurrent.duration._
 
 object ISBNUtil {
 
-    implicit val googleBooksReads: Reads[Book] = (
-        (JsPath \ "volumeInfo" \ "title").read[String] and
-            (JsPath \ "volumeInfo" \ "authors").read[List[String]]
+    val googleBooksReads: Reads[Book] = (
+        (JsPath \ "title").read[String] and
+            (JsPath \ "authors").read[List[String]]
         ) (Book.apply _)
 
-    def googleBooksLookup(isbn: String)(implicit ws: WSClient): Future[List[Book]] = {
+    def googleBooksLookup(isbn: String)(implicit ws: WSClient): Future[Seq[Book]] = {
         val gapiRequest = ws.url("https://www.googleapis.com/books/v1/volumes")
             .withHeaders("Accept" -> "application/json")
             .withRequestTimeout(10000.millis)
-        gapiRequest.withQueryString("q" -> ("isbn:" + isbn)).get().map(response => (response.json \ "items").as[List[Book]])
+
+        gapiRequest.withQueryString("q" -> ("isbn:" + isbn)).get().map(response =>
+            (response.json \\ "volumeInfo").map(jsVal => jsVal.as[Book](googleBooksReads))
+        )
     }
 
 }

@@ -8,7 +8,7 @@ import play.api.mvc._
 import util.ISBNUtil
 
 
-class Application @Inject()(implicit ws: WSClient) extends Controller {
+class Application @Inject()(implicit ws: WSClient, environment: play.api.Environment) extends Controller {
 
     def index = Action {
         Ok(views.html.index("Your new application is ready."))
@@ -16,7 +16,10 @@ class Application @Inject()(implicit ws: WSClient) extends Controller {
 
     def lookupISBN(isbn: String) = Action.async {
         ISBNUtil.googleBooksLookup(isbn).map(books => {
-            Ok(views.html.isbnLookup(books))
+            if (books.nonEmpty)
+                Ok(views.html.isbnLookup(books))
+            else
+                NotFound("No books were found with that ISBN")
         })
     }
 
