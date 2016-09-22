@@ -42,12 +42,9 @@ object ISBNUtil {
     }
 
     def isbnLookup(isbn: String)(implicit ws: WSClient): Future[Seq[Option[Book]]] = {
-        val googleBooksPromise = googleBooksLookup(isbn)
-        val openLibBooksPromise = openLibraryLookup(isbn)
-
         for {
-            googleBooks <- googleBooksPromise
-            openLibBooks <- openLibBooksPromise
+            googleBooks <- googleBooksLookup(isbn)
+            openLibBooks <- openLibraryLookup(isbn)
         } yield {
             googleBooks :+ openLibBooks
         }
