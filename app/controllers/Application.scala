@@ -18,7 +18,7 @@ class Application @Inject()(implicit ws: WSClient, environment: play.api.Environ
     }
 
     def lookupISBN(isbn: String) = Action.async {
-        ISBNUtil.googleBooksLookup(isbn).map(books => {
+        ISBNUtil.isbnLookup(isbn).map(books => {
             Ok(views.html.isbnLookup(books))
         })
     }
