@@ -1,0 +1,10 @@
+@()
+
+@helpers.modal("devModeModal") {
+    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+} {
+    <label for="wsInput">Web Socket URL:</label> <input type="text" id="wsInput" value="ws://192.168.1.120:9999"/>
+    <button id="wsSubmit" type="button" class="btn btn-primary" >Connect to scanner Web Socket</button>
+} {
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+}
