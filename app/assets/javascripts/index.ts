@@ -11,17 +11,21 @@ $(() => {
         $(hash).modal('toggle');
     }
     $("#isbnSubmit").on("click", () => {
-        $.ajax({
-            type: 'GET',
-            url: `/isbnLookup/${$('#isbnInput').val()}`,
-            dataType: 'html',
-            error(error: JQueryXHR, status: string, errorThrown: string) {
-                console.error(status + " | " + errorThrown, error);
-                info.html(`<p>${error.responseText}</p>`);
-            },
-            success(data: any) {
-                $("#info").html(data);
-            }
-        })
+        isbnLookup($('#isbnInput').val())
     });
 });
+
+export function isbnLookup(isbn: string): void {
+    $.ajax({
+        type: 'GET',
+        url: `/isbnLookup/${isbn}`,
+        dataType: 'html',
+        error(error: JQueryXHR, status: string, errorThrown: string) {
+            console.error(status + " | " + errorThrown, error);
+            info.html(`<p>${error.responseText}</p>`);
+        },
+        success(data: any) {
+            info.html(data);
+        }
+    })
+}

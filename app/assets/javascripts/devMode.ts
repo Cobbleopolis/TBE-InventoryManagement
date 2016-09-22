@@ -1,3 +1,4 @@
+import {isbnLookup} from "./index";
 let socket: WebSocket;
 
 $(() => {
@@ -9,6 +10,7 @@ $(() => {
             let isbn: string = "";
             data.forEach((charCode: number) => isbn += String.fromCharCode(charCode));
             $("#isbnInput").val(decodeURIComponent(String.fromCharCode.apply(null, data)));
+            isbnLookup(isbn)
         };
     });
 });
