@@ -21,30 +21,27 @@ object ISBNUtil {
             (JsPath \ "authors").read[List[Map[String, String]]].map(_.map(_ ("name")))
         ) (Book.apply _)
 
-    def googleBooksLookup(isbn: String)(implicit ws: WSClient): Future[Seq[Book]] = {
+    def googleBooksLookup(isbn: String)(implicit ws: WSClient): Future[Seq[Option[Book]]] = {
         ws.url("https://www.googleapis.com/books/v1/volumes")
             .withHeaders("Accept" -> "application/json")
             .withRequestTimeout(10000.millis)
             .withQueryString("q" -> ("isbn:" + isbn)).get().map(response =>
-            (response.json \\ "volumeInfo").map(jsVal => jsVal.as[Book](googleBooksReads))
+            (response.json \\ "volumeInfo").map(jsVal => jsVal.asOpt[Book](googleBooksReads))
         )
     }
 
-    def openLibraryLookup(isbn: String)(implicit ws: WSClient): Future[Book] = {
+    def openLibraryLookup(isbn: String)(implicit ws: WSClient): Future[Option[Book]] = {
         ws.url("https://openlibrary.org/api/books")
             .withHeaders("Accept" -> "application/json")
             .withRequestTimeout(10000.millis)
             .withQueryString("format" -> "json")
             .withQueryString("jscmd" -> "data")
-            .withQueryString("bibkeys" -> ("ISBN:" + isbn)).get().map(response => {
-
-            (response.json \ ("ISBN:" + isbn)).as[Book](openLibraryReads)
-        }
-
+            .withQueryString("bibkeys" -> ("ISBN:" + isbn)).get().map(response =>
+                (response.json \ ("ISBN:" + isbn)).asOpt[Book](openLibraryReads)
         )
     }
 
-    def isbnLookup(isbn: String)(implicit ws: WSClient): Future[Seq[Book]] = {
+    def isbnLookup(isbn: String)(implicit ws: WSClient): Future[Seq[Option[Book]]] = {
         val googleBooksPromise = googleBooksLookup(isbn)
         val openLibBooksPromise = openLibraryLookup(isbn)
 

@@ -1,8 +1,8 @@
-@(books: Seq[Book])
+@(books: Seq[Option[Book]])
 
-@if(books.nonEmpty) {
-    @for(b <- books) {
-        @components.book(b)
+@if(books.nonEmpty && books.exists(_.nonEmpty)) {
+    @for(b <- books.filter(_.isDefined)) {
+        @components.book(b.get)
     }
 } else {
     <p>No books found with that ISBN.</p>
